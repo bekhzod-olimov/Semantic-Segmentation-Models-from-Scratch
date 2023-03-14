@@ -11,7 +11,6 @@ def run(args):
     tr_dl, val_dl = get_dl(args.root, transformations, args.batch_size)
     
     model = get_model(args.model_name, args.n_cls, args.depth, args.model_type)
-    
     loss_fn = torch.nn.CrossEntropyLoss()
     opt = torch.optim.AdamW(model.parameters(), lr=args.learning_rate)
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, args.learning_rate, epochs=args.epochs,
