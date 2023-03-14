@@ -10,7 +10,8 @@ def get_model(model_name, classes, encoder_depth, model_type):
     
     elif model_type == 'unet':
         print(f"Original UNet without pretrained weights is successfully loaded!\n")
-        return UNet(3,23, 64)
-        
-
-
+        return UNet(in_chs     = 3,
+                    n_cls      = 23,
+                    out_chs    = 64,
+                    depth      =  4,
+                    up_method  =  'bilinear')
