@@ -29,7 +29,8 @@ class Metrics():
             
             for c in range(self.n_cls):
                 
-                match_pred, match_gt = pred == c, gt == c
+                match_pred = pred == c
+                match_gt   = gt == c
 
                 if match_gt.long().sum().item() == 0: iou_per_class.append(np.nan)
                     
