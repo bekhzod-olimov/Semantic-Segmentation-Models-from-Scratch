@@ -1,3 +1,4 @@
+# Import libraries
 import torch
 from torch.utils.data import Dataset, DataLoader
 from PIL import Image
@@ -6,6 +7,22 @@ from PIL import ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 class CustomDataset(Dataset):
+    
+    """
+    
+    This class extracts data from pre-defined directory.
+    
+    Arguments:
+    
+        root            - directory path to the dataset, str;
+        transformations - transformations to be applied to the data, bool;
+        im_files        - image file types, list.
+        
+    Output:
+        
+        dataset (with applied transformations).
+    
+    """
     
     def __init__(self, root, transformations = None, im_files = ['.jpg', '.png', '.jpeg']):
         
