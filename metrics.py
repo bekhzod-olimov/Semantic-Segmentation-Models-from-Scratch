@@ -12,7 +12,10 @@ class Metrics():
     
     Arguments:
     
-        pred - predicted mask;
+        pred    - predicted mask, tensor;
+        gt      - ground truth mask, tensor;
+        loss_fn - loss function, torch loss function;
+        eps     - epsilon value, float
         
     Outputs:
     
