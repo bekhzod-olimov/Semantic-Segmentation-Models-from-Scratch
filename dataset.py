@@ -43,6 +43,25 @@ class CustomDataset(Dataset):
         return im, gt
     
 def get_dl(root, transformations, bs, split = [0.8, 0.2]):
+    
+    """
+    
+    This function gets path of the data, transformations, batch size, and split options; creates dataloaders and return train and validation dataloaders.
+    
+    Arguments:
+    
+        root            - directory path to the dataset, str;
+        transformations - transformations to be applied to the data, bool;
+        im_files        - image file types, list.
+        
+    Output:
+        
+        dataset (with applied transformations).
+    
+    """
+    
+    
+    
         
     assert sum(split) == 1., "Sum of the split must be equal to 1"
     
@@ -53,10 +72,8 @@ def get_dl(root, transformations, bs, split = [0.8, 0.2]):
     print(f"\nThere are {len(tr_ds)} number of images in the train set")
     print(f"There are {len(val_ds)} number of images in the validation set\n")
     
-    tr_dl  = DataLoader(tr_ds, batch_size = bs, shuffle = True)
+    tr_dl  = DataLoader(tr_ds,  batch_size = bs, shuffle = True)
     val_dl = DataLoader(val_ds, batch_size = bs, shuffle = False)
-    
-    
     
     return tr_dl, val_dl
     
