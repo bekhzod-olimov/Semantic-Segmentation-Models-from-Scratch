@@ -42,6 +42,7 @@ class CustomDataset(Dataset):
         # Get the pair of images and masks in the specific index
         im, gt = Image.open(self.im_paths[idx]), Image.open(self.gt_paths[idx])
         
+        # Apply transformations if exist
         if self.transformations is not None: im, gt = self.transformations(im), self.transformations(gt)
         
         return im, gt
@@ -66,15 +67,19 @@ def get_dl(root, transformations, bs, split = [0.8, 0.2]):
     
     """
         
+    # Make sure sum of the split list equals to 1 
     assert sum(split) == 1., "Sum of the split must be equal to 1"
     
+    # Get the dataset
     ds = CustomDataset(root, transformations)
     
+    # Split the dataset into train and validation sets
     tr_ds, val_ds = torch.utils.data.random_split(ds, split)
     
     print(f"\nThere are {len(tr_ds)} number of images in the train set")
     print(f"There are {len(val_ds)} number of images in the validation set\n")
     
+    # Create train and validation dataloaders
     tr_dl  = DataLoader(tr_ds,  batch_size = bs, shuffle = True)
     val_dl = DataLoader(val_ds, batch_size = bs, shuffle = False)
     
