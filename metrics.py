@@ -1,8 +1,23 @@
+# Import libraries
 import torch
 import torch.nn.functional as F
 import numpy as np
 
 class Metrics():
+    
+    """
+    
+    This class gets predicted and ground truth masks, loss function, epsilon value, and number of classes;
+    and computes pixel accuracy (PA), mean intersection over union (mIoU), and loss values.
+    
+    Arguments:
+    
+        pred - predicted mask;
+        
+    Outputs:
+    
+    
+    """
     
     def __init__(self, pred, gt, loss_fn, eps = 1e-10, n_cls = 23):
         
