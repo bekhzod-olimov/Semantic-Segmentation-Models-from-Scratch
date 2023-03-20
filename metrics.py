@@ -15,10 +15,14 @@ class Metrics():
         pred    - predicted mask, tensor;
         gt      - ground truth mask, tensor;
         loss_fn - loss function, torch loss function;
-        eps     - epsilon value, float
+        eps     - epsilon value, float;
+        n_cls   - number of classes, int.
         
     Outputs:
     
+        PA      - pixel accuracy value, float;
+        mIoU    - mean intersection over union value, float;
+        loss    - loss value, float.
     
     """
     
