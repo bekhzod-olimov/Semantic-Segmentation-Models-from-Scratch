@@ -28,14 +28,18 @@ class CustomDataset(Dataset):
         
         super().__init__()
 
+        # Get paths of the images and masks 
         self.im_paths = sorted(glob(f"{root}/original_images/*[{im_file for im_file in im_files}]"))
         self.gt_paths = sorted(glob(f"{root}/label_images_semantic/*[{im_file for im_file in im_files}]"))
+        
+        # Set transformations
         self.transformations = transformations
         
     def __len__(self): return len(self.im_paths)
         
     def __getitem__(self, idx):
         
+        # Get the pair of images and masks in the specific index
         im, gt = Image.open(self.im_paths[idx]), Image.open(self.gt_paths[idx])
         
         if self.transformations is not None: im, gt = self.transformations(im), self.transformations(gt)
