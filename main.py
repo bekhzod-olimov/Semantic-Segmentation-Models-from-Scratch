@@ -26,12 +26,15 @@ def run(args):
     # Initialize scheduler for the optimizer
     sched = torch.optim.lr_scheduler.OneCycleLR(opt, args.learning_rate, epochs = args.epochs, steps_per_epoch = len(tr_dl))
     
+    # Start training
     his = train(model, tr_dl, val_dl, loss_fn, opt, sched, args.device, args.epochs, args.model_type)
     
 if __name__ == "__main__":
     
+    # Initialize argument parser
     parser = argparse.ArgumentParser(description = "Semantic Segmentation Train Arguments")
     
+    # Add arguments to the parser
     parser.add_argument("-r", "--root", type = str, default = 'data/dataset/semantic_drone_dataset', help = "Path to the data")
     parser.add_argument("-bs", "--batch_size", type = int, default = 6, help = "Mini-batch size")
     parser.add_argument("-mn", "--model_name", type = str, default = 'mobilenet_v2', help = "Model name for backbone")
@@ -42,6 +45,8 @@ if __name__ == "__main__":
     parser.add_argument("-lr", "--learning_rate", type = float, default = 1e-3, help = "Learning rate value")
     parser.add_argument("-e", "--epochs", type = int, default = 30, help = "Train epochs number")
     
+    # Parse the arguments
     args = parser.parse_args() 
     
-    run(args) 
+    # Run the code
+    run(args)
