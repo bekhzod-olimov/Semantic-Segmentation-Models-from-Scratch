@@ -51,17 +51,16 @@ def get_dl(root, transformations, bs, split = [0.8, 0.2]):
     Arguments:
     
         root            - directory path to the dataset, str;
+        bs              - batch size, int;
         transformations - transformations to be applied to the data, bool;
-        im_files        - image file types, list.
+        split           - split ratios, Python list with ints.
         
     Output:
         
-        dataset (with applied transformations).
+        tr_dl           - train dataloader;
+        val_dl          - validation dataloader. 
     
     """
-    
-    
-    
         
     assert sum(split) == 1., "Sum of the split must be equal to 1"
     
