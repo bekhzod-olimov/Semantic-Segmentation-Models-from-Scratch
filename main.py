@@ -1,3 +1,4 @@
+# Import libraries
 import argparse, torch
 from dataset import get_dl
 from transformations import get_transformations
@@ -7,14 +8,23 @@ from train import train
 
 def run(args):
     
+    # Get transformations
     transformations = get_transformations()[0]
+    
+    # Get train and validation dataloaders
     tr_dl, val_dl = get_dl(args.root, transformations, args.batch_size)
     
+    # Get train model    
     model = get_model(args.model_name, args.n_cls, args.depth, args.model_type)
+    
+    # Initialize loss function
     loss_fn = torch.nn.CrossEntropyLoss()
-    opt = torch.optim.AdamW(model.parameters(), lr=args.learning_rate)
-    sched = torch.optim.lr_scheduler.OneCycleLR(opt, args.learning_rate, epochs=args.epochs,
-                                                steps_per_epoch=len(tr_dl))
+    
+    # Initialize optimizer to update trainable parameters
+    opt = torch.optim.AdamW(model.parameters(), lr = args.learning_rate)
+    
+    # Initialize scheduler for the optimizer
+    sched = torch.optim.lr_scheduler.OneCycleLR(opt, args.learning_rate, epochs = args.epochs, steps_per_epoch = len(tr_dl))
     
     his = train(model, tr_dl, val_dl, loss_fn, opt, sched, args.device, args.epochs, args.model_type)
     
