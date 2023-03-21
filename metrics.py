@@ -38,6 +38,13 @@ class Metrics():
     def to_contiguous(self, inp): return inp.contiguous().view(-1)
     
     def PA(self):
+        
+        """
+        
+        This function computes pixel accuracy between predicted and ground truth masks.
+        
+        
+        """
 
         with torch.no_grad():
             
