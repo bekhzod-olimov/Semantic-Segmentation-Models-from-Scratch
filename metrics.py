@@ -28,9 +28,13 @@ class Metrics():
     
     def __init__(self, pred, gt, loss_fn, eps = 1e-10, n_cls = 23):
         
-        self.pred, self.gt = torch.argmax(F.softmax(pred, dim=1), dim=1), gt
+        # Get predicted and ground truth masks for evaluation
+        self.pred, self.gt = torch.argmax(F.softmax(pred, dim = 1), dim = 1), gt
+        
+        # Get loss function, epsilon value, number of classes, and original predicted mask (for loss value calculation) 
         self.loss_fn, self.eps, self.n_cls, self.pred_ = loss_fn, eps, n_cls, pred
         
+    # Move to contiguous
     def to_contiguous(self, inp): return inp.contiguous().view(-1)
     
     def PA(self):
