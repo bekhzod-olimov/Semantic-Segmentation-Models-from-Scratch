@@ -54,6 +54,13 @@ class Metrics():
 
     def mIoU(self):
         
+        """
+        
+        This function computes mean intersection over union between predicted and ground truth masks.
+        
+        
+        """
+        
         with torch.no_grad():
             
             pred, gt = self.to_contiguous(self.pred), self.to_contiguous(self.gt)
