@@ -47,7 +47,6 @@ class Metrics():
         
             pixel accuracy score.
         
-        
         """
 
         with torch.no_grad():
@@ -86,12 +85,16 @@ class Metrics():
                 
                 # Get number of ground truth pixels for a specific class
                 match_gt   = gt == c
-
+                
+                # In case gt image has no pixels for the class
                 if match_gt.long().sum().item() == 0: iou_per_class.append(np.nan)
                     
                 else:
                     
+                    # Compute intersection
                     intersect = torch.logical_and(match_pred, match_gt).sum().float().item()
+                    
+                    # Compute union
                     union = torch.logical_or(match_pred, match_gt).sum().float().item()
 
                     iou = (intersect + self.eps) / (union + self.eps)
