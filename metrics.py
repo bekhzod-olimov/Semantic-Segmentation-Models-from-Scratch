@@ -68,11 +68,11 @@ class Metrics():
         
             mean intersection over union value.
         
-        
         """
         
         with torch.no_grad():
             
+            # Change predicted and ground truth masks to contiguous values
             pred, gt = self.to_contiguous(self.pred), self.to_contiguous(self.gt)
 
             iou_per_class = []
