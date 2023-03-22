@@ -75,11 +75,16 @@ class Metrics():
             # Change predicted and ground truth masks to contiguous values
             pred, gt = self.to_contiguous(self.pred), self.to_contiguous(self.gt)
 
+            # Initialize a list to compute iou for each class in the dataset
             iou_per_class = []
-            
+
+            # Go through each class in the dataset
             for c in range(self.n_cls):
                 
+                # Get number of prediction pixels for a specific class
                 match_pred = pred == c
+                
+                # Get number of ground truth pixels for a specific class
                 match_gt   = gt == c
 
                 if match_gt.long().sum().item() == 0: iou_per_class.append(np.nan)
