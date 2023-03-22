@@ -43,6 +43,10 @@ class Metrics():
         
         This function computes pixel accuracy between predicted and ground truth masks.
         
+        Output:
+        
+            pixel accuracy score.
+        
         
         """
 
@@ -59,6 +63,10 @@ class Metrics():
         """
         
         This function computes mean intersection over union between predicted and ground truth masks.
+        
+        Output:
+        
+            mean intersection over union value.
         
         
         """
