@@ -48,8 +48,10 @@ class Metrics():
 
         with torch.no_grad():
             
+            # Get number of matching pixels
             match = torch.eq(self.pred, self.gt).int()
         
+        # Compute pixel accuracy
         return float(match.sum()) / float(match.numel())
 
     def mIoU(self):
