@@ -97,9 +97,13 @@ class Metrics():
                     # Compute union
                     union = torch.logical_or(match_pred, match_gt).sum().float().item()
 
+                    # Comput iou
                     iou = (intersect + self.eps) / (union + self.eps)
-                    iou_per_class.append(iou)
                     
+                    # Append to the list
+                    iou_per_class.append(iou)
+            
+            # Return mean intersection over union value
             return np.nanmean(iou_per_class)
     
     def loss(self): 
