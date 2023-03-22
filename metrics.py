@@ -45,7 +45,7 @@ class Metrics():
         
         Output:
         
-            pixel accuracy score.
+            pixel accuracy score, float.
         
         """
 
@@ -65,7 +65,7 @@ class Metrics():
         
         Output:
         
-            mean intersection over union value.
+            mean intersection over union value, float.
         
         """
         
@@ -107,6 +107,17 @@ class Metrics():
             return np.nanmean(iou_per_class)
     
     def loss(self): 
+        
+        """
+        
+        This function computes loss value between the predicted and ground truth masks.
+        
+        Output:
+        
+            loss value, float.
+        
+        """
+        
         return self.loss_fn(self.pred_, self.gt)
 
 # t = get_transformations()[1]
