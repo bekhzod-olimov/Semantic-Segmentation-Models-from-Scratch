@@ -19,6 +19,13 @@ def train(model, tr_dl, val_dl, loss_fn, opt, sch, device, epochs, save_prefix):
         tr_dl       - train dataloader, torch dataloader object;
         val_dl      - validation dataloader, torch dataloader object;
         loss_fn     - loss function for evaluation, torch loss function object;
+        opt         - optimizer to update trainable parameters, torch optimizer object;
+        sch         - scheduler for the optimizer, torch scheduler object;
+        device      - a gpu device type, str;
+        epochs      - number of epochs to be trained, int;
+        save_prefix - prefix to save the best model, str;
+        
+    Output
         
     
     """
