@@ -10,9 +10,14 @@ def get_model(model_name, classes, encoder_depth, model_type):
     
     Arguments:
     
-        model_name - name of the model for training, str;
-        classes    - number of classes in the dataset, int;
+        model_name    - name of the model for training, str;
+        classes       - number of classes in the dataset, int;
+        encoder_depth - depth of the encoder of the model, int;
+        model_type    - type of the model to be initialized, str.
         
+    Output:
+    
+        model         - a model to be trained.
     
     """
     
