@@ -9,6 +9,22 @@ def tic_toc(start_time = None): return time.time() if start_time == None else ti
     
 def train(model, tr_dl, val_dl, loss_fn, opt, sch, device, epochs, save_prefix):
     
+    """
+    
+    This function gets several arguments and conducts training process.
+    
+    Arguments:
+    
+        model       - a model to be trained, various;
+        tr_dl       - train dataloader, torch dataloader object;
+        val_dl      - validation dataloader, torch dataloader object;
+        loss_fn     - loss function for evaluation, torch loss function object;
+        
+    
+    """
+    
+    
+    
     tr_loss, tr_pa, tr_iou = [], [], []
     val_loss, val_pa, val_iou = [], [], []
     tr_len, val_len = len(tr_dl), len(val_dl)
