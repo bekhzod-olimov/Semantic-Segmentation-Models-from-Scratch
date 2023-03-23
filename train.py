@@ -25,12 +25,11 @@ def train(model, tr_dl, val_dl, loss_fn, opt, sch, device, epochs, save_prefix):
         epochs      - number of epochs to be trained, int;
         save_prefix - prefix to save the best model, str;
         
-    Output
-        
+    Output:
+    
+        results     - model evaluation details, dictionary.
     
     """
-    
-    
     
     tr_loss, tr_pa, tr_iou = [], [], []
     val_loss, val_pa, val_iou = [], [], []
