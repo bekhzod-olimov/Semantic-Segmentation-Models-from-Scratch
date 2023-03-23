@@ -1,7 +1,20 @@
+# Import libraries
 import segmentation_models_pytorch as smp
 from models.unet import UNet
 
 def get_model(model_name, classes, encoder_depth, model_type): 
+    
+    """
+    
+    This function gets name of the model, number of classes, depth of the encoder, and model type and returns initialized model.
+    
+    Arguments:
+    
+        model_name - name of the model for training, str;
+        classes    - number of classes in the dataset, int;
+        
+    
+    """
     
     if model_type == 'smp':
         print(f"UNet model with pretrained {model_name} backbone weights is successfully loaded!\n")
