@@ -18,7 +18,7 @@ class CustomDataset(Dataset):
     
         root            - path to the directory with data, str;
         transformations - transforms to be applied to the output images, albumentations object;
-        
+        im_files        - names of the image files to be returned, list.
     
     """
     
@@ -26,20 +26,41 @@ class CustomDataset(Dataset):
         
         super().__init__()
 
+        # Get images paths
         self.im_paths = sorted(glob(f"{root}/original_images/*[{im_file for im_file in im_files}]"))
+        
+        # Get masks paths
         self.gt_paths = sorted(glob(f"{root}/label_images_semantic/*[{im_file for im_file in im_files}]"))
+        
+        # Initialize transformations
         self.transformations = transformations
+        
+        # Transform array to tensor
         self.tensorize = T.Compose([T.ToTensor()])
         
     def __len__(self): return len(self.im_paths)
         
     def __getitem__(self, idx):
         
+        """
+    
+        This function gets index and returns corresponding image and mask from the dataset. 
+
+        Arguments:
+
+            idx            - index of the data to be returned, int;
+
+        """
+        
+        # Get an image and corresponding mask (0 for grayscale mask)
         im, gt = cv2.cvtColor(cv2.imread(self.im_paths[idx]), cv2.COLOR_BGR2RGB), cv2.imread(self.gt_paths[idx], 0)
+        
+        # Apply transformations
         if self.transformations is not None: 
             transformed = self.transformations(image = im, mask = gt)
-            im, gt = transformed['image'], transformed['mask']
-        return self.tensorize(im), torch.tensor(gt).long()
+            
+        # Return the transformed image and mask
+        return self.tensorize(transformed['image']), torch.tensor(transformed['mask']).long()
     
 def get_dl(root, transformations, bs, split=[0.85, 0.15]):
         
