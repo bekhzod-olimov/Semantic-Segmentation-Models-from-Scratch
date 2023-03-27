@@ -1,3 +1,4 @@
+# Import libraries
 import torch, cv2
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms as T
@@ -8,6 +9,18 @@ from transformations import get_transformations
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 class CustomDataset(Dataset):
+    
+    """
+    
+    This class gets path to data, transformations, image files and returns images and masks for the specific index.
+    
+    Arguments:
+    
+        root            - path to the directory with data, str;
+        transformations - transforms to be applied to the output images, albumentations object;
+        
+    
+    """
     
     def __init__(self, root, transformations = None, im_files = ['.jpg', '.png', '.jpeg']):
         
