@@ -70,24 +70,30 @@ def get_dl(root, transformations, bs, split=[0.85, 0.15]):
     
     Arguments:
     
-        root      - path to the data, str;
+        root            - path to the data, str;
         transformations - transforms to be applied to the data, torchvision transforms object;
+        bs              - mini batch size, int;
+        split           - split ratios, list -> int.
         
-    
+    Outputs:
+        
+        tr_dl           - train dataloader;
+        val_dl          - validation dataloader.
+        
     """
         
     assert sum(split) == 1., "Sum of the split must be equal to 1"
     
+    # Get dataset
     ds = CustomDataset(root, transformations)
+    
+    # Split the dataset based on the pre-defined split ratios
     tr_ds, val_ds = torch.utils.data.random_split(ds, split)
         
     print(f"\nThere are {len(tr_ds)} number of images in the train set")
     print(f"There are {len(val_ds)} number of images in the validation set\n")
     
-    tr_dl  = DataLoader(tr_ds, batch_size = bs, shuffle = True, num_workers = 8)
-    val_dl = DataLoader(val_ds, batch_size = bs, shuffle = False, num_workers = 8)
-    
-    return tr_dl, val_dl
+    return DataLoader(tr_ds, batch_size = bs, shuffle = True, num_workers = 8), DataLoader(val_ds, batch_size = bs, shuffle = False, num_workers = 8)
     
 # ds = CustomDataset("data/dataset/semantic_drone_dataset")
 # print(ds[0])
