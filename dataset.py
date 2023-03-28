@@ -63,6 +63,18 @@ class CustomDataset(Dataset):
         return self.tensorize(transformed['image']), torch.tensor(transformed['mask']).long()
     
 def get_dl(root, transformations, bs, split=[0.85, 0.15]):
+    
+    """
+    
+    This function gets root, transformations, bs, and split and returns train and validation dataloaders.
+    
+    Arguments:
+    
+        root      - path to the data, str;
+        transformations - transforms to be applied to the data, torchvision transforms object;
+        
+    
+    """
         
     assert sum(split) == 1., "Sum of the split must be equal to 1"
     
