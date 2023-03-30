@@ -1,3 +1,4 @@
+# Import  libraries
 import torch, time
 from torch import nn
 from torchvision.ops import StochasticDepth
@@ -5,10 +6,33 @@ from einops import rearrange
 from typing import List, Iterable
 
 class LayerNorm2d(nn.LayerNorm):
+    
+    """
+    
+    This function gets a tensor volume, rearranges it, applies LayerNorm and rearranges to its original shape.
+    
+    """
+    
     def forward(self, x):
+        
+        """
+        
+        This function does feedforward of the LayerNorm2d class.
+        
+        Argument:
+        
+            x    - input volume to the class, tensor.
+            
+        Output:
+            
+            x    - rearranged and LayerNorm applied volume, tensor.
+        
+        """
+        
         x = rearrange(x, "b c h w -> b h w c") # (1, 224, 224, 3)
         x = super().forward(x) # (1, 224, 224, 3)
         x = rearrange(x, "b h w c -> b c h w") # (1, 3, 224, 224)
+        
         return x
     
 class OverlapPatchMerging(nn.Sequential):
