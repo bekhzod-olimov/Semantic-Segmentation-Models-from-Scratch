@@ -36,17 +36,32 @@ class LayerNorm2d(nn.LayerNorm):
         return x
     
 class OverlapPatchMerging(nn.Sequential):
-    def __init__(
-        self, in_channels: int, out_channels: int, patch_size: int, overlap_size: int
-    ):
+    
+    """
+    
+    This class gets several arguments and returns overlap patch merging function.
+    
+    Arguments:
+    
+        in_channels  - number of channels of the input volume, int;
+        out_channels - number of channels of the output volume, int;
+        overlap_size - size of the overlap operation, int.
+        
+    Output:
+    
+        overlap patch merging function.
+        
+    """
+    
+    def __init__(self, in_channels: int, out_channels: int, patch_size: int, overlap_size: int):
         super().__init__(
             nn.Conv2d(
-                in_channels,            # 3
-                out_channels,           # 64 
-                kernel_size=patch_size, # 16
-                stride=overlap_size,    # 16
-                padding=patch_size // 2,# 8
-                bias=False
+                in_channels,              # 3
+                out_channels,             # 64 
+                kernel_size = patch_size, # 16
+                stride = overlap_size,    # 16
+                padding = patch_size // 2,# 8
+                bias = False
             ),
             LayerNorm2d(out_channels)
         )
