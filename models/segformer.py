@@ -67,17 +67,27 @@ class OverlapPatchMerging(nn.Sequential):
         )
         
 class EfficientMultiHeadAttention(nn.Module):
+    
+    """
+    
+    This class gets several arguments and does multi-head attention layer in a more efficient way.
+    
+    Arguments:
+    
+        channels        - number of channels, int;
+        reduction_ratio - factor to reduce the input volume, int;
+        num_heads       - number of heads of the attention layer, int.
+        
+    Output:
+    
+        out             - output of the multi head attention layer, tensor.
+    
+    """
+    
     def __init__(self, channels: int, reduction_ratio: int = 1, num_heads: int = 8):
         super().__init__()
-        self.reducer = nn.Sequential(
-            nn.Conv2d(
-                channels, channels, kernel_size=reduction_ratio, stride=reduction_ratio
-            ),
-            LayerNorm2d(channels),
-        )
-        self.att = nn.MultiheadAttention(
-            channels, num_heads=num_heads, batch_first=True
-        )
+        self.reducer = nn.Sequential(nn.Conv2d(channels, channels, kernel_size = reduction_ratio, stride = reduction_ratio), LayerNorm2d(channels))
+        self.att = nn.MultiheadAttention(channels, num_heads = num_heads, batch_first = True)
 
     def forward(self, x):
         _, _, h, w = x.shape
