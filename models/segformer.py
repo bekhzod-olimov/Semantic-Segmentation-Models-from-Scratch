@@ -127,9 +127,9 @@ class MixMLP(nn.Sequential):
             nn.Conv2d(
                 channels,
                 channels * expansion,
-                kernel_size=3,
-                groups=channels,
-                padding=1,
+                kernel_size = 3,
+                groups = channels,
+                padding = 1,
             ),
             nn.GELU(),
             # dense layer
@@ -138,6 +138,20 @@ class MixMLP(nn.Sequential):
         
 
 class ResidualAdd(nn.Module):
+    
+    """
+    
+    This class does residual add for skip connections.
+    
+    Argument:
+    
+        x - input volume, tensor;
+    
+    Output:
+        
+        x - output volume from residual block, tensor.
+    
+    """
     
     def __init__(self, fn):
         super().__init__()
@@ -264,7 +278,7 @@ class SegFormerSegmentationHead(nn.Module):
             nn.ReLU(), # why relu? Who knows
             nn.BatchNorm2d(channels) # why batchnorm and not layer norm? Idk
         )
-        self.predict = nn.Conv2d(channels, num_classes, kernel_size=1)
+        self.predict = nn.Conv2d(channels, num_classes, kernel_size = 1)
 
     def forward(self, features):
         x = torch.cat(features, dim=1)
