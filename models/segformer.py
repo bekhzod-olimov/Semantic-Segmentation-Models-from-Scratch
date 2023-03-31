@@ -98,11 +98,27 @@ class EfficientMultiHeadAttention(nn.Module):
         # query, key, value input to the attention layer
         # out = self.att(x, reduced_x, reduced_x) # [0](Attention output) -> (1, 4096, 16); [1](Attention output weights) -> (1, 4096, 64)
         out = self.att(x, reduced_x, reduced_x)[0]
-        out = rearrange(out, "b (h w) c -> b c h w", h=h, w=w) # (1,16,64,64)
+        out = rearrange(out, "b (h w) c -> b c h w", h = h, w = w) # (1,16,64,64)
         
         return out
 
 class MixMLP(nn.Sequential):
+    
+    """
+    
+    This class initializes mixed MLP layer and returns it.
+    
+    Arguments:
+    
+        channels  - channels of the input volume, int;
+        expansion - a factor to upsample, int.
+        
+    Output:
+    
+        mixed MLP layer.
+    
+    """
+    
     def __init__(self, channels: int, expansion: int = 4):
         super().__init__(
             # dense layer
