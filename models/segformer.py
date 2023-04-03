@@ -158,11 +158,31 @@ class ResidualAdd(nn.Module):
         self.fn = fn
 
     def forward(self, x, **kwargs):
+        
         out = self.fn(x, **kwargs)
-        x = x + out
-        return x
+        
+        return x + out
 
 class SegFormerEncoderBlock(nn.Sequential):
+    
+    """
+    
+    This class creates an encoder block of the SegFormer network.
+    
+    Arguments:
+    
+        channels        - number of input channels, int;
+        reduction_ratio - factor to reduce an input volume, int;
+        num_heads       - number of attention heads, int;
+        mlp_expansion   - factor to increase MixMLP, int;
+        drop_path_prob  - dropout probability, float.
+        
+    Output:
+    
+        Encoder Block, torch sequential object.
+    
+    """
+    
     def __init__(
         self,
         channels: int,
@@ -181,8 +201,8 @@ class SegFormerEncoderBlock(nn.Sequential):
             ResidualAdd(
                 nn.Sequential(
                     LayerNorm2d(channels),
-                    MixMLP(channels, expansion=mlp_expansion),
-                    StochasticDepth(p=drop_path_prob, mode="batch")
+                    MixMLP(channels, expansion = mlp_expansion),
+                    StochasticDepth(p = drop_path_prob, mode = "batch")
                 )
             ),
         )
