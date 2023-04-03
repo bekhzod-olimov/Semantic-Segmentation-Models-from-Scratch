@@ -209,6 +209,29 @@ class SegFormerEncoderBlock(nn.Sequential):
 
 
 class SegFormerEncoderStage(nn.Sequential):
+    
+    """
+    
+    This class gets several arguments and creates an encoder model of the Segformer network.
+    
+    Arguments:
+    
+        in_channels     - number of channels of an input volume, int;
+        out_channels    - number of channels of an output volume, int;
+        patch_size      - size of a patch, int;
+        overlap_size    - size for overlap matching, int;
+        drop_probs      - probabilities for dropout, list -> int;
+        depth           - an encoder model depth, int;
+        reduction_ratio - a factor to reduce dimensions of an input volume, int;
+        num_heads       - number of attention heads, int;
+        mlp_expansion   - factor to increase MixMLP, int;
+        
+    Output:
+    
+        Encoder Model, torch sequential object.
+    
+    """
+    
     def __init__(
         self,
         in_channels: int,
