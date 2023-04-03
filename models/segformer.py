@@ -262,8 +262,20 @@ class SegFormerEncoderStage(nn.Sequential):
         
 
 def chunks(data: Iterable, sizes: List[int]):
+    
     """
-    Given an iterable, returns slices using sizes as indices
+    
+    This function gets iterable with numbers and sizes list and returns slices of the list based on the sizes information.
+    
+    Arguments:
+    
+        data   - data to be chunked, iterable object;
+        sizes  - size information to be chunked, list -> int.
+        
+    Output:
+    
+        chunk  - chunk of the data, generator object.
+        
     """
     curr = 0
     for size in sizes:
