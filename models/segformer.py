@@ -297,20 +297,15 @@ class SegFormerEncoder(nn.Module):
         all_num_heads    - total number of attention heads, list -> int;
         patch_sizes      - total sizes of a patch, list -> int;
         overlap_sizes    - total sizes for overlap matching, list -> int;
-        drop_probs      - probabilities for dropout, list -> int;
-        depth           - an encoder model depth, int;
-        reduction_ratio - a factor to reduce dimensions of an input volume, int;
-        num_heads       - number of attention heads, int;
-        mlp_expansion   - factor to increase MixMLP, int;
+        reduction_ratios - total factors to reduce dimensions of an input volume, list -> int;
+        mlp_expansions   - total factors to increase MixMLP, list -> int;
+        drop_prob        - probability value for dropout, float;
         
     Output:
     
-        Encoder Model, torch sequential object.
-    
+        An Encoder Network, torch sequential object.
         
     """
-    
-    
     
     def __init__(
         self,
@@ -325,10 +320,9 @@ class SegFormerEncoder(nn.Module):
         drop_prob: float = .0
     ):
         super().__init__()
-        # create drop paths probabilities (one for each stage's block)
+        
+        # Dropout probabilites for based on the depth of the network
         drop_probs =  [x.item() for x in torch.linspace(0, drop_prob, sum(depths))]
-        # print(drop_probs)
-        # print(list(chunks(drop_probs, sizes=depths)))
         self.stages = nn.ModuleList(
             [
                 SegFormerEncoderStage(*args)
