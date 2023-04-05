@@ -245,9 +245,7 @@ class SegFormerEncoderStage(nn.Sequential):
         mlp_expansion: int = 4,
     ):
         super().__init__()
-        self.overlap_patch_merge = OverlapPatchMerging(
-            in_channels, out_channels, patch_size, overlap_size,
-        )
+        self.overlap_patch_merge = OverlapPatchMerging(in_channels, out_channels, patch_size, overlap_size)
         
         self.blocks = nn.Sequential(
                 *[
@@ -258,8 +256,6 @@ class SegFormerEncoderStage(nn.Sequential):
                 ]
             )
         self.norm = LayerNorm2d(out_channels)
-        
-        
 
 def chunks(data: Iterable, sizes: List[int]):
     
@@ -323,6 +319,8 @@ class SegFormerEncoder(nn.Module):
         
         # Dropout probabilites for based on the depth of the network
         drop_probs =  [x.item() for x in torch.linspace(0, drop_prob, sum(depths))]
+        
+        # Initialize stages of the encoder stage
         self.stages = nn.ModuleList(
             [
                 SegFormerEncoderStage(*args)
@@ -331,7 +329,7 @@ class SegFormerEncoder(nn.Module):
                     widths,
                     patch_sizes,
                     overlap_sizes,
-                    chunks(drop_probs, sizes=depths),
+                    chunks(drop_probs, sizes = depths),
                     depths,
                     reduction_ratios,
                     all_num_heads,
@@ -341,7 +339,11 @@ class SegFormerEncoder(nn.Module):
         )
         
     def forward(self, x):
+        
+        # Initialize list for the features of each stage of the encoder network
         features = []
+        
+        # Go through every stage of the encoder network
         for stage in self.stages:
             x = stage(x)
             features.append(x)
