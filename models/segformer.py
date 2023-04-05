@@ -284,6 +284,34 @@ def chunks(data: Iterable, sizes: List[int]):
         yield chunk
 
 class SegFormerEncoder(nn.Module):
+    
+    """
+    
+    This class creates an encoder network of SegFormer.
+    
+    Arguments:
+    
+        in_channels      - number of channels of an input volume, int;
+        widths           - width of the encoder network, list -> int;
+        depths           - depth of the encoder network, list -> int;
+        all_num_heads    - total number of attention heads, list -> int;
+        patch_sizes      - total sizes of a patch, list -> int;
+        overlap_sizes    - total sizes for overlap matching, list -> int;
+        drop_probs      - probabilities for dropout, list -> int;
+        depth           - an encoder model depth, int;
+        reduction_ratio - a factor to reduce dimensions of an input volume, int;
+        num_heads       - number of attention heads, int;
+        mlp_expansion   - factor to increase MixMLP, int;
+        
+    Output:
+    
+        Encoder Model, torch sequential object.
+    
+        
+    """
+    
+    
+    
     def __init__(
         self,
         in_channels: int,
