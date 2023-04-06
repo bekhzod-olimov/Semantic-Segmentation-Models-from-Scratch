@@ -353,22 +353,24 @@ class SegFormerSegmentationHead(nn.Module):
     
     """
     
-    This class initializes Segmentation Head Network.
+    This class initializes Segmentation Head Network and returns its output volume.
     
     Arguments:
     
         channels     - number of channels of the input volume, int;
         num_classes  - number of classes in the dataset, int;
         num_features - number of features in the segmentation head network, int.
-       
+        
+    Output:
     
+        x            - output volume from the Segmentation Head network, tensor.
+        
     """
-    
     
     def __init__(self, channels: int, num_classes: int, num_features: int = 4):
         super().__init__()
         self.fuse = nn.Sequential(
-            nn.Conv2d(channels * num_features, channels, kernel_size=1, bias=False),
+            nn.Conv2d(channels * num_features, channels, kernel_size = 1, bias = False),
             nn.ReLU(), # why relu? Who knows
             nn.BatchNorm2d(channels) # why batchnorm and not layer norm? Idk
         )
