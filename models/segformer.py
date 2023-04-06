@@ -350,6 +350,21 @@ class SegFormerEncoder(nn.Module):
         return features   
     
 class SegFormerSegmentationHead(nn.Module):
+    
+    """
+    
+    This class initializes Segmentation Head Network.
+    
+    Arguments:
+    
+        channels     - number of channels of the input volume, int;
+        num_classes  - number of classes in the dataset, int;
+        num_features - number of features in the segmentation head network, int.
+       
+    
+    """
+    
+    
     def __init__(self, channels: int, num_classes: int, num_features: int = 4):
         super().__init__()
         self.fuse = nn.Sequential(
