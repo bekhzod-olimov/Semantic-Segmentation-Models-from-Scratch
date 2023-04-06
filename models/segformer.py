@@ -378,6 +378,20 @@ class SegFormerSegmentationHead(nn.Module):
 
     def forward(self, features):
         
+        """
+        
+        This function gets input features and passes them through Segmentation Head Network.
+        
+        Argument:
+        
+            features    - input features volume, tensor;
+        
+        Output:
+             
+            x           - output volume from the Segmentation Head Network, tensor.
+        
+        """
+        
         x = torch.cat(features, dim = 1)
         x = self.sequence(x)
         return self.out_layer(x)
