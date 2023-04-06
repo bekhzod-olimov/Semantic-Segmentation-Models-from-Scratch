@@ -392,8 +392,13 @@ class SegFormerSegmentationHead(nn.Module):
         
         """
         
+        # Concatenate features using the dimension #1
         x = torch.cat(features, dim = 1)
+        
+        # Pass through sequence of layers
         x = self.sequence(x)
+        
+        # Return output volume
         return self.out_layer(x)
     
 class SegFormerDecoderBlock(nn.Sequential):
