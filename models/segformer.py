@@ -410,11 +410,9 @@ class SegFormerDecoderBlock(nn.Sequential):
     
     Arguments:
     
-        in_channels - number of channels of the input volume to a convolution layer, int;
+        in_channels  - number of channels of the input volume to a convolution layer, int;
         out_channels - number of channels of the output volume from the convolution layer, int;
-        
-    
-        
+        scale_factor - a factor used to upsample the input volume, int.       
     
     """
     
