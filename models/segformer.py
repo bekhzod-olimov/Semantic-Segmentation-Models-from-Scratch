@@ -402,6 +402,18 @@ class SegFormerSegmentationHead(nn.Module):
         return self.out_layer(x)
     
 class SegFormerDecoderBlock(nn.Sequential):
+    
+    
+    """
+    
+    This class initializes Decoder network of SegFormer.
+    
+    Arguments:
+    
+        
+    
+    """
+    
     def __init__(self, in_channels: int, out_channels: int, scale_factor: int = 2):
         super().__init__(
             nn.UpsamplingBilinear2d(scale_factor=scale_factor),
