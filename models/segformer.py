@@ -406,7 +406,7 @@ class SegFormerDecoderBlock(nn.Sequential):
     
     """
     
-    This class initializes Decoder network of SegFormer.
+    This class initializes a block of the Decoder Network of SegFormer.
     
     Arguments:
     
@@ -417,12 +417,25 @@ class SegFormerDecoderBlock(nn.Sequential):
     """
     
     def __init__(self, in_channels: int, out_channels: int, scale_factor: int = 2):
-        super().__init__(
-            nn.UpsamplingBilinear2d(scale_factor=scale_factor),
-            nn.Conv2d(in_channels, out_channels, kernel_size=1),
-        )
+        super().__init__(nn.UpsamplingBilinear2d(scale_factor = scale_factor), nn.Conv2d(in_channels, out_channels, kernel_size = 1))
         
 class SegFormerDecoder(nn.Module):
+    
+    """
+    
+    This class initializes a Decoder network of SegFormer.
+    
+    Arguments:
+    
+        in_channels  - number of channels of the input volume to a convolution layer, int;
+        out_channels - number of channels of the output volume from the convolution layer, int;
+        scale_factor - a factor used to upsample the input volume, int.       
+    
+    """
+    
+    
+    
+    
     def __init__(self, out_channels: int, widths: List[int], scale_factors: List[int]):
         super().__init__()
         self.stages = nn.ModuleList(
