@@ -427,21 +427,17 @@ class SegFormerDecoder(nn.Module):
     
     Arguments:
     
-        in_channels  - number of channels of the input volume to a convolution layer, int;
-        out_channels - number of channels of the output volume from the convolution layer, int;
-        scale_factor - a factor used to upsample the input volume, int.       
+        out_channels  - number of channels of the output volume from the convolution layer, int;
+        widths        - values for the width in the Decoder Network, list -> int;
+        scale_factors - factor values used to upsample the input volumes, list -> int.       
     
     """
-    
-    
-    
     
     def __init__(self, out_channels: int, widths: List[int], scale_factors: List[int]):
         super().__init__()
         self.stages = nn.ModuleList(
             [
-                SegFormerDecoderBlock(in_channels, out_channels, scale_factor)
-                for in_channels, scale_factor in zip(widths, scale_factors)
+                SegFormerDecoderBlock(in_channels, out_channels, scale_factor) for in_channels, scale_factor in zip(widths, scale_factors)
             ]
         )
     
