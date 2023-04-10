@@ -430,6 +430,10 @@ class SegFormerDecoder(nn.Module):
         out_channels  - number of channels of the output volume from the convolution layer, int;
         widths        - values for the width in the Decoder Network, list -> int;
         scale_factors - factor values used to upsample the input volumes, list -> int.       
+        
+    Output:
+    
+        new_features  - features from the decoder of the SegFormer model, list.
     
     """
     
@@ -442,10 +446,23 @@ class SegFormerDecoder(nn.Module):
         )
     
     def forward(self, features):
+        
+        """
+        
+        This function gets input features and passes them through decoder network of the SegFormer and returns new decoded features.
+        
+        Arguments:
+        
+            features     - input features, list;
+            new_features - output decoded features, list.
+        
+        """
+        
         new_features = []
         for feature, stage in zip(features,self.stages):
             x = stage(feature)
             new_features.append(x)
+            
         return new_features
     
 class SegFormer(nn.Module):
