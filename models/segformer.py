@@ -517,23 +517,31 @@ class SegFormer(nn.Module):
     ):
 
         super().__init__()
-        self.encoder = SegFormerEncoder(
-            in_channels,
-            widths,
-            depths,
-            all_num_heads,
-            patch_sizes,
-            overlap_sizes,
-            reduction_ratios,
-            mlp_expansions,
-            drop_prob,
-        )
+        
+        # Formulate an encoder network
+        self.encoder = SegFormerEncoder(in_channels, widths, depths, all_num_heads, patch_sizes, overlap_sizes, reduction_ratios, mlp_expansions, drop_prob)
+        # Formulate a decoder network
         self.decoder = SegFormerDecoder(decoder_channels, widths[::-1], scale_factors)
-        self.head = SegFormerSegmentationHead(
-            decoder_channels, num_classes, num_features=len(widths)
-        )
+        # Formulate a head network
+        self.head = SegFormerSegmentationHead(decoder_channels, num_classes, num_features = len(widths))
 
     def forward(self, x):
+        
+        """
+        
+        This function gets an input image and generates a segmented mask using the SegFormer model.
+        
+        Argument:
+        
+            x            - an input image, tensor.
+            
+        Output:
+        
+            segmentation - a segmented output mask;
+        
+        """
+        
+        # Encode the feature
         features = self.encoder(x)
         features = self.decoder(features[::-1])
         segmentation = self.head(features)
