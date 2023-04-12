@@ -543,9 +543,12 @@ class SegFormer(nn.Module):
         
         # Encode the feature
         features = self.encoder(x)
+        
+        # Decode the encoded features
         features = self.decoder(features[::-1])
-        segmentation = self.head(features)
-        return segmentation
+        
+        # Generate and return a segmentation mask using the decoded features
+        return self.head(features)
     
 # segformer = SegFormer(
 #     in_channels=3,
@@ -561,5 +564,5 @@ class SegFormer(nn.Module):
 #     num_classes=23,
 # )
 
-# segmentation = segformer(torch.randn(1,3,704, 1056))
-# print(segmentation.shape)
+# pred_mask = segformer(torch.randn(1,3,704, 1056))
+# print(pred_mask.shape)
