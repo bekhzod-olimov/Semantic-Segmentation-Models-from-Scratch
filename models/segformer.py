@@ -451,16 +451,24 @@ class SegFormerDecoder(nn.Module):
         
         This function gets input features and passes them through decoder network of the SegFormer and returns new decoded features.
         
-        Arguments:
+        Argument:
         
             features     - input features, list;
-            new_features - output decoded features, list.
+        
+        Output:
+        
+            new_features  - features from the decoder of the SegFormer model, list.
         
         """
         
         new_features = []
+        
+        # Go through every feature and stage
         for feature, stage in zip(features,self.stages):
+            
+            # Decode the features
             x = stage(feature)
+            # Add the decoded features to the list
             new_features.append(x)
             
         return new_features
