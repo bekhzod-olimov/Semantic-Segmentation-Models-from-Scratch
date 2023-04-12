@@ -474,6 +474,32 @@ class SegFormerDecoder(nn.Module):
         return new_features
     
 class SegFormer(nn.Module):
+    
+    """
+    
+    This class initializes a SegFormer Model.
+    
+    Arguments:
+    
+        in_channels      - number of channels of an input volume, int;
+        widths           - width of the encoder network, list -> int;
+        depths           - depth of the encoder network, list -> int;
+        all_num_heads    - total number of attention heads, list -> int;
+        patch_sizes      - total sizes of a patch, list -> int;
+        overlap_sizes    - total sizes for overlap matching, list -> int;
+        reduction_ratios - total factors to reduce dimensions of an input volume, list -> int;
+        mlp_expansions   - total factors to increase MixMLP, list -> int;
+        decoder_channels - number of decoder channels, int;
+        scale_factors    - factor values used to upsample the input volumes, list -> int.       
+        num_classes      - number of classes in the dataset, int;
+        drop_prob        - probability value for dropout, float;
+        
+    Output:
+    
+        A SegFormer Model, torch sequential object.
+    
+    """
+    
     def __init__(
         self,
         in_channels: int,
