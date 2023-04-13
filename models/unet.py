@@ -33,14 +33,30 @@ class UNetBlock(nn.Module):
         self.block_1 = self.get_conv_block(in_chs = in_chs, out_chs = out_chs)
         self.block_2 = self.get_conv_block(in_chs = out_chs, out_chs = out_chs)
 
-    def get_conv_block(self, in_chs, out_chs):
+    def get_conv_block(self, in_chs: int, out_chs: int):
         
-        return nn.Sequential(nn.Conv2d(in_channels = in_chs, out_channels = out_chs, kernel_size = self.ks, padding = self.p)
-                             nn.BatchNorm2d(out_chs), 
-                             nn.ReLU(inplace = True))
+        """
+        
+        This function gets several arguments and returns a convolution block of UNet.
+        
+        Arguments:
+        
+            in_chs   - number of channels of the input volume, int;
+            out_chs  - number of channels of the output volume, int.
+            
+       Output:
+       
+           a convolution block of UNet, torch sequential model.
+        
+        """
+        
+        return nn.Sequential(
+               nn.Conv2d(in_channels = in_chs, out_channels = out_chs, kernel_size = self.ks, padding = self.p)
+               nn.BatchNorm2d(out_chs), 
+               nn.ReLU(inplace = True)
+                            )
     
-    def forward(self, x): return self.block_2(self.block_1(x))
-
+    def forward(self, inp): return self.block_2(self.block_1(inp))
 
 class DownSampling(nn.Module):
     
