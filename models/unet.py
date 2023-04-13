@@ -51,7 +51,7 @@ class UNetBlock(nn.Module):
         """
         
         return nn.Sequential(
-               nn.Conv2d(in_channels = in_chs, out_channels = out_chs, kernel_size = self.ks, padding = self.p)
+               nn.Conv2d(in_channels = in_chs, out_channels = out_chs, kernel_size = self.ks, padding = self.p),
                nn.BatchNorm2d(out_chs), 
                nn.ReLU(inplace = True)
                             )
@@ -60,13 +60,28 @@ class UNetBlock(nn.Module):
 
 class DownSampling(nn.Module):
     
-    def __init__(self, in_chs, out_chs):
+    """
+    
+    This class gets several arguments and does downsampling operation.
+    
+    Arguments:
+        
+        in_chs   - number of channels of the input volume, int;
+        out_chs  - number of channels of the output volume, int.
+
+    Output:
+
+        out      - a downsampled volume, tensor.
+    
+    """
+    
+    def __init__(self, in_chs: int, out_chs: int):
         super().__init__()
         
-        self.downsample_block = nn.Sequential(  nn.MaxPool2d(2), UNetBlock(in_chs, out_chs) )
+        # Initialize downsample block
+        self.downsample_block = nn.Sequential(  nn.MaxPool2d(kernel_size = 2, stride = 2), UNetBlock(in_chs = in_chs, out_chs = out_chs) )
 
     def forward(self, x): return self.downsample_block(x)
-
 
 class UpSampling(nn.Module):
 
