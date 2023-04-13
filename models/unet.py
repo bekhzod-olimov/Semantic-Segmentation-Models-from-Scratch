@@ -1,13 +1,32 @@
+# Import libraries
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+from typing import List
 
 class UNetBlock(nn.Module):
+    
+    """
+    
+    This class gets several arguments and formulates a convolution block of UNet model.
+    
+    Arguments:
+    
+        in_chs   - number of channels of the input volume, int;
+        out_chs  - number of channels of the output volume, int;
+        ks       - kernel size of the convolution operation, int;
+        p        - padding value for the convolution operation, int.
+        
+    Output:
+    
+        out      - output volume from a convolution block of UNet, tensor.
+    
+    """
 
-    def __init__(self, in_chs, out_chs, ks = 3, p = 1):
+    def __init__(self, in_chs: int, out_chs: int, ks: int = 3, p: int = 1):
         super().__init__()
         
-        
+        # Get kernel size and padding value
         self.ks, self.p = ks, p
         self.block_1 = self.get_conv_block(in_chs, out_chs)
         self.block_2 = self.get_conv_block(out_chs, out_chs)
