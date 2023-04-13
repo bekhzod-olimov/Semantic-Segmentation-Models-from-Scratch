@@ -28,14 +28,16 @@ class UNetBlock(nn.Module):
         
         # Get kernel size and padding value
         self.ks, self.p = ks, p
-        self.block_1 = self.get_conv_block(in_chs, out_chs)
-        self.block_2 = self.get_conv_block(out_chs, out_chs)
+        
+        # Initialize the first and the second convolution blocks
+        self.block_1 = self.get_conv_block(in_chs = in_chs, out_chs = out_chs)
+        self.block_2 = self.get_conv_block(in_chs = out_chs, out_chs = out_chs)
 
     def get_conv_block(self, in_chs, out_chs):
         
-        return nn.Sequential(nn.Conv2d(in_channels=in_chs, out_channels=out_chs,
-                                       kernel_size=self.ks, padding=self.p), 
-                             nn.BatchNorm2d(out_chs), nn.ReLU(inplace=True))
+        return nn.Sequential(nn.Conv2d(in_channels = in_chs, out_channels = out_chs, kernel_size = self.ks, padding = self.p)
+                             nn.BatchNorm2d(out_chs), 
+                             nn.ReLU(inplace = True))
     
     def forward(self, x): return self.block_2(self.block_1(x))
 
